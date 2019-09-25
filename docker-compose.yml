@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  testbed:
+    build: docker
+    networks:
+      - nw-testbed
+    working_dir: /root/app
+    volumes:
+      - ".:/root/app"
+      - "$HOME/.m2:/root/.m2"
+      - "$HOME/.ivy2:/root/.ivy2"
+      - "$HOME/.coursier:/root/.coursier"
+      - "./credentials/:/root/credentials"
+    env_file:
+      - ./.env
+
+volumes:
+  vol-testbed:
+    driver: local
+
+networks:
+  nw-testbed: {}
