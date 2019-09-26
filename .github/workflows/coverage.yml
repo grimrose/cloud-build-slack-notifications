@@ -31,3 +31,5 @@ jobs:
     - name: Prepare testing
       run: |
         make prepare
+    - name: Run test
+      run: make test
