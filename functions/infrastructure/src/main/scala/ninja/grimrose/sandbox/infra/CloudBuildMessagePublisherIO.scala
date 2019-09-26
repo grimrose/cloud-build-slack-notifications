@@ -4,16 +4,15 @@ import cats.effect.IO
 import ninja.grimrose.sandbox.domain.{CloudBuildMessage, CloudBuildMessagePublisher}
 import wvlet.log.LogSupport
 
-
 trait CloudBuildMessagePublisherIO extends CloudBuildMessagePublisher[IO] with LogSupport {
 
   import hammock._
   import hammock.circe.implicits._
-  import hammock.fetch.Interpreter._
   import hammock.hi.Opts
   import wvlet.airframe._
 
-  private val slackWebhookAdapter = bind[SlackWebhookAdapter]
+  private val slackWebhookAdapter                   = bind[SlackWebhookAdapter]
+  private implicit val interpTrans: InterpTrans[IO] = bind[InterpTrans[IO]]
 
   override def publish(message: CloudBuildMessage): IO[String] = {
     for {

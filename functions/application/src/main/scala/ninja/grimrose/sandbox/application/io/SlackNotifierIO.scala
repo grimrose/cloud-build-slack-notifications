@@ -8,8 +8,8 @@ import wvlet.log.LogSupport
 import scala.concurrent.ExecutionContext
 
 /**
- * @see https://cloud.google.com/cloud-build/docs/configure-third-party-notifications
- */
+  * @see https://cloud.google.com/cloud-build/docs/configure-third-party-notifications
+  */
 trait SlackNotifierIO extends SlackNotifier[IO] with LogSupport {
 
   import retry.CatsEffect._
