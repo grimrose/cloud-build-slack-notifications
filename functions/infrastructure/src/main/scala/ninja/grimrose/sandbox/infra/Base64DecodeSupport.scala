@@ -1,9 +1,7 @@
 package ninja.grimrose.sandbox.infra
 
-import java.util.Base64
+import ninja.grimrose.sandbox.core.Base64Decoder
 
 trait Base64DecodeSupport {
-  def decode(input: String) = new String(Base64.getDecoder.decode(input))
+  def decode(input: String): String = Base64Decoder.decode(input)
 }
-
-object Base64DecodeSupport extends Base64DecodeSupport
