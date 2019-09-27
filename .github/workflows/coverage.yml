@@ -31,5 +31,7 @@ jobs:
     - name: Prepare testing
       run: |
         make prepare
-    - name: Run test
-      run: make test
+    - name: Run lint
+      run: make lint
+    - name: Run coverage
+      run: make coverage

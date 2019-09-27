@@ -8,10 +8,13 @@ clean:
 fmt:
 	sbt fmt
 
+lint:
+	sbt lint
+
 compile:
 	sbt compile
 
-test:
+test: lint
 	sbt "testOnly * -- -oDF"
 
 coverage:
