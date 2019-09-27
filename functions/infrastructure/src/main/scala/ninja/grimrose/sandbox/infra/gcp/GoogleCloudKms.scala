@@ -4,17 +4,15 @@ import cats.effect.{ContextShift, IO}
 
 import scala.concurrent.ExecutionContext
 
-trait GoolgeCloudKms {
-  import wvlet.airframe._
+trait GoogleCloudKms[F[_]] {
 
-  private val configName = bind[ConfigName]
+  def decrypt(cipherText: CipherText): F[String]
 
-  private val projectIdAdapter   = bind[ProjectIdAdapter]
-  private val locationIdAdapter  = bind[LocationIdAdapter]
-  private val keyRingIdAdapter   = bind[KeyRingIdAdapter]
-  private val cryptoKeyIdAdapter = bind[CryptoKeyIdAdapter]
+}
 
-  private implicit val ec: ExecutionContext = bind[ExecutionContext]
+class GoogleCloudKmsIO(configName: ConfigName, kmsIdClient: GoogleCloudKmsIdClient[IO])(
+    implicit val ec: ExecutionContext
+) extends GoogleCloudKms[IO] {
 
   import typings.atGoogleDashCloudKms.atGoogleDashCloudKmsMod.v1Ns.{
     KeyManagementServiceClient,
@@ -23,15 +21,15 @@ trait GoolgeCloudKms {
 
   def decrypt(cipherText: CipherText): IO[String] = {
     for {
-      projectId   <- projectIdAdapter.find
-      locationId  <- locationIdAdapter.find
-      keyRingId   <- keyRingIdAdapter.find(projectId, configName)
-      cryptoKeyId <- cryptoKeyIdAdapter.find(projectId, configName)
-      decrypted   <- decrypt(projectId, locationId, keyRingId, cryptoKeyId, cipherText)
+      projectId   <- kmsIdClient.findProjectId
+      locationId  <- kmsIdClient.findLocationId
+      keyRingId   <- kmsIdClient.findKeyRingId(projectId, configName)
+      cryptoKeyId <- kmsIdClient.findCryptoKeyId(projectId, configName)
+      decrypted   <- requestDecrypt(projectId, locationId, keyRingId, cryptoKeyId, cipherText)
     } yield decrypted
   }
 
-  private def decrypt(
+  private def requestDecrypt(
       projectId: ProjectId,
       locationId: LocationId,
       keyRingId: KeyRingId,
