@@ -33,5 +33,5 @@ jobs:
         make prepare
     - name: Run lint
       run: make lint
-    - name: RUn coverage
+    - name: Run coverage
       run: make coverage
