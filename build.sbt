@@ -142,4 +142,5 @@ lazy val root = (project in file("."))
   .aggregate(coreJs, coreJvm, application, infrastructure, `entry-point`)
 
 addCommandAlias("fmt", ";scalafmtAll;scalafmtSbt")
+addCommandAlias("lint", ";scalafmtCheckAll;scalafmtSbtCheck")
 addCommandAlias("cov", ";clean;coverage;test;coverageReport:coverageAggregate")
