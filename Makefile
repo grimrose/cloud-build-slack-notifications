@@ -14,6 +14,9 @@ compile:
 test:
 	sbt "testOnly * -- -oDF"
 
+coverage:
+	sbt cov
+
 fast:
 	sbt fastOptJS
 
@@ -60,3 +63,7 @@ deploy-gcp:
 		--source ./target/dist
 
 deploy: clean stage deploy-gcp
+
+submit-cloud-build:
+	cd docker && \
+		gcloud builds submit . --config=cloudbuild.yaml

@@ -1,24 +1,23 @@
 package ninja.grimrose.sandbox.domain
 
 import ninja.grimrose.sandbox.BaseSpecSupport
-import org.scalatest.FlatSpec
+import org.scalatest.FunSpec
+import org.scalatest.prop.TableDrivenPropertyChecks
 
-class CloudBuildMessageSpec extends FlatSpec with BaseSpecSupport {
+class CloudBuildMessageSpec extends FunSpec with TableDrivenPropertyChecks with BaseSpecSupport {
 
   import io.circe.syntax._
 
-  it should "asJson" in {
+  it("asJson") {
     val message = CloudBuildMessage.build(
       buildId = "test",
       logUrl = "https://console.cloud.google.com",
       status = "SUCCESS",
       badStatus = false,
-      startTime = "2014-10-02T15:01:23.045123456Z",
-      finishTime = "2014-10-02T15:01:23.045123456Z",
+      startTime = Some("2014-10-02T15:01:23.045123456Z"),
+      finishTime = Some("2014-10-02T15:01:23.045123456Z"),
       timeout = "3.5s"
     )
-
-    debug(message.asJson.spaces2)
 
     val expected =
       """|{
@@ -54,5 +53,38 @@ class CloudBuildMessageSpec extends FlatSpec with BaseSpecSupport {
          |  ]
          |}""".stripMargin
     assert(message.asJson.spaces2 === expected)
+  }
+
+  it("parsed") {
+    val fixtures = Table(
+      ("rawJson", "expected"),
+      (
+        """|{
+           |  "id" : "c473aeb6-4f29-4ff9-b8bb-68c7bc1f1460",
+           |  "projectId" : "example",
+           |  "status" : "QUEUED",
+           |  "timeout" : "1200s",
+           |  "logUrl" : "https://console.cloud.google.com/"
+           |}""".stripMargin,
+        true
+      ),
+      (
+        """|{
+           |  "id" : "a87d2d8a-5455-4585-a995-6e2a6fb38d39",
+           |  "projectId" : "example",
+           |  "status" : "SUCCESS",
+           |  "startTime" : "2019-09-25T16:34:24.958573388Z",
+           |  "finishTime" : "2019-09-25T16:36:02.353865Z",
+           |  "timeout" : "1200s",
+           |  "logUrl" : "https://console.cloud.google.com/"
+           |}""".stripMargin,
+        false
+      )
+    )
+
+    forAll(fixtures) { (rawJson, expected) =>
+      val actual = CloudBuildMessage.parse(rawJson)
+      assert(actual.isLeft === expected)
+    }
   }
 }

@@ -5,3 +5,5 @@ import java.util.Base64
 trait Base64DecodeSupport {
   def decode(input: String) = new String(Base64.getDecoder.decode(input))
 }
+
+object Base64DecodeSupport extends Base64DecodeSupport

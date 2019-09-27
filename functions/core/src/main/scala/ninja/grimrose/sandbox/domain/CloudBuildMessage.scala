@@ -1,11 +1,13 @@
 package ninja.grimrose.sandbox.domain
 
+import wvlet.log.LogSupport
+
 case class CloudBuildMessage(
     text: String,
     attachments: Seq[CloudBuildMessage.BuildAttachment]
 )
 
-object CloudBuildMessage {
+object CloudBuildMessage extends LogSupport {
 
   import cats.data.Validated
   import cats.data.Validated._
@@ -34,6 +36,7 @@ object CloudBuildMessage {
 
     // https://cloud.google.com/cloud-build/docs/api/reference/rest/Shared.Types/Build
     val json = parser.parse(rawJson).getOrElse(Json.Null)
+    debug(json.spaces2)
 
     val cursor = json.hcursor
 
@@ -41,16 +44,17 @@ object CloudBuildMessage {
       validate(cursor, "status").toValidatedNel,
       validate(cursor, "id").toValidatedNel,
       validate(cursor, "logUrl").toValidatedNel,
-      validate(cursor, "startTime").toValidatedNel,
-      validate(cursor, "finishTime").toValidatedNel,
       validate(cursor, "timeout").toValidatedNel
     ).sequence
 
     validated match {
       case Valid(values) =>
         values match {
-          case status :: id :: logUrl :: startTime :: finishTime :: timeout :: Nil =>
+          case status :: id :: logUrl :: timeout :: Nil =>
             if (targetStatuses.contains(status)) {
+              val startTime  = cursor.get[String]("startTime").toOption
+              val finishTime = cursor.get[String]("finishTime").toOption
+
               Right(build(id, logUrl, status, status != "SUCCESS", startTime, finishTime, timeout))
             } else {
               Left(Map("msg" -> "not target status", "status" -> status).asJson.noSpaces)
@@ -74,10 +78,41 @@ object CloudBuildMessage {
       logUrl: String,
       status: String,
       badStatus: Boolean,
-      startTime: String,
-      finishTime: String,
+      startTime: Option[String],
+      finishTime: Option[String],
       timeout: String
   ): CloudBuildMessage = {
+
+    val fields = Seq(
+      Some(
+        Field(
+          title = "Status",
+          value = status
+        )
+      ),
+      startTime.map { time =>
+        Field(
+          title = "StartTime",
+          value = time,
+          short = true
+        )
+      },
+      finishTime.map { time =>
+        Field(
+          title = "FinishTime",
+          value = time,
+          short = true
+        )
+      },
+      Some(
+        Field(
+          title = "timeout",
+          value = timeout,
+          short = true
+        )
+      )
+    ).flatten
+
     CloudBuildMessage(
       text = s"Build `$buildId`",
       attachments = Seq(
@@ -85,23 +120,7 @@ object CloudBuildMessage {
           title = "Build logs",
           titleLink = logUrl,
           color = if (badStatus) "danger" else "good",
-          fields = Seq(
-            Field(
-              title = "Status",
-              value = status
-            ),
-            Field(
-              title = "StartTime",
-              value = startTime,
-              short = true
-            ),
-            Field(
-              title = "FinishTime",
-              value = finishTime,
-              short = true
-            ),
-            Field(title = "timeout", value = timeout, short = true)
-          )
+          fields = fields
         )
       )
     )

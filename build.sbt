@@ -5,6 +5,8 @@ ThisBuild / scalaVersion := "2.12.10"
 ThisBuild / organization := "ninja.grimrose.sandbox"
 ThisBuild / version := "0.1"
 
+ThisBuild / scalafmtOnCompile := true
+
 val scalaJsnodeJsV8Version = "0.8.0"
 
 val airframeVersion  = "19.9.7"
@@ -139,5 +141,5 @@ lazy val root = (project in file("."))
   )
   .aggregate(coreJs, coreJvm, application, infrastructure, `entry-point`)
 
-addCommandAlias("fmt", ";scalafmt;test:scalafmt;scalafmtSbt")
+addCommandAlias("fmt", ";scalafmtAll;scalafmtSbt")
 addCommandAlias("cov", ";clean;coverage;test;coverageReport:coverageAggregate")

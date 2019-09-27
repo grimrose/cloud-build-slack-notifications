@@ -3,14 +3,14 @@ package ninja.grimrose.sandbox
 import cats.effect.IO
 import ninja.grimrose.sandbox.application.SlackNotifier
 import ninja.grimrose.sandbox.domain.PubsubMessage
-import ninja.grimrose.sandbox.infra.{HammockFetcher, InfrastructureModule}
+import ninja.grimrose.sandbox.infra.{Base64DecodeSupport, HammockFetcher, InfrastructureModule}
 import wvlet.log.{LogFormatter, LogLevel, LogSupport, Logger}
 
 import scala.concurrent.{ExecutionContext, Promise}
 import scala.scalajs.js.{Dictionary, JSON}
 import scala.scalajs.js.annotation.JSExportTopLevel
 
-object EntryPoint extends LogSupport {
+object EntryPoint extends LogSupport with Base64DecodeSupport {
 
   import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
   import scala.scalajs.js.JSConverters._
@@ -40,7 +40,8 @@ object EntryPoint extends LogSupport {
       val task: IO[Unit] = for {
         fetched  <- fetcher.fetch
         _        <- IO(info("fetched" -> fetched))
-        notified <- notifier.notify(pubsubMessage.data.getOrElse(""))
+        decoded  <- IO(decode(pubsubMessage.data.getOrElse("")))
+        notified <- notifier.notify(decoded)
         _        <- IO(promise.success(notified))
       } yield ()
 
