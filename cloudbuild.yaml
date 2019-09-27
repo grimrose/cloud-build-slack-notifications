@@ -7,11 +7,7 @@ steps:
   - name: 'gcr.io/$PROJECT_ID/node-sbt'
     args:
       - 'sbt'
-      - 'test'
-
-  - name: 'gcr.io/$PROJECT_ID/node-sbt'
-    args:
-      - 'sbt'
+      - 'clean'
       - 'fullOptJS'
 
   - name: 'gcr.io/cloud-builders/yarn'
