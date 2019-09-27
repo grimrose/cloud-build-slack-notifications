@@ -1,3 +1,3 @@
 # cloud-build-slack-notifications
 
-![](https://github.com/grimrose/cloud-build-slack-notifications/workflows/coverage/badge.svg)
+[![GitHub Actions Status](https://github.com/grimrose/cloud-build-slack-notifications/workflows/.github/workflows/coverage.yml/badge.svg?branch=master)](https://github.com/grimrose/cloud-build-slack-notifications/actions)
