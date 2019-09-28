@@ -1,7 +1,6 @@
 package ninja.grimrose.sandbox.infra.gcp
 
 import cats.effect.{ContextShift, IO}
-import ninja.grimrose.sandbox.infra.Base64DecodeSupport
 import typings.googleDashAuthDashLibrary.buildSrcAuthGoogleauthMod.GoogleAuthOptions
 import typings.googleDashAuthDashLibrary.googleDashAuthDashLibraryMod.GoogleAuth
 import wvlet.log.LogSupport
@@ -25,8 +24,7 @@ class GoogleCloudKmsIdClientIO(
     loadEnvDecoder: GoogleCloudRCLoadEnvDecoder[IO],
     executionContext: ExecutionContext
 ) extends GoogleCloudKmsIdClient[IO]
-    with LogSupport
-    with Base64DecodeSupport {
+    with LogSupport {
 
   def findProjectId: IO[ProjectId] = {
     implicit val contextShift: ContextShift[IO] = IO.contextShift(executionContext)

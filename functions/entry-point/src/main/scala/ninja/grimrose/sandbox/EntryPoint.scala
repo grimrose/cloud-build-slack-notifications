@@ -2,15 +2,16 @@ package ninja.grimrose.sandbox
 
 import cats.effect.IO
 import ninja.grimrose.sandbox.application.SlackNotifier
+import ninja.grimrose.sandbox.core.Base64Decoder
 import ninja.grimrose.sandbox.domain.PubsubMessage
-import ninja.grimrose.sandbox.infra.{Base64DecodeSupport, HammockFetcher, InfrastructureModule}
+import ninja.grimrose.sandbox.infra.InfrastructureModule
 import wvlet.log.{LogFormatter, LogLevel, LogSupport, Logger}
 
 import scala.concurrent.{ExecutionContext, Promise}
-import scala.scalajs.js.{Dictionary, JSON}
 import scala.scalajs.js.annotation.JSExportTopLevel
+import scala.scalajs.js.{Dictionary, JSON}
 
-object EntryPoint extends LogSupport with Base64DecodeSupport {
+object EntryPoint extends LogSupport {
 
   import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
   import scala.scalajs.js.JSConverters._
@@ -34,20 +35,16 @@ object EntryPoint extends LogSupport with Base64DecodeSupport {
         dict.get("attributes").map(_.asInstanceOf[Map[String, String]]).getOrElse(Map.empty[String, String])
       )
 
-      val fetcher  = session.build[HammockFetcher]
       val notifier = session.build[SlackNotifier[IO]]
 
       val task: IO[Unit] = for {
-        fetched  <- fetcher.fetch
-        _        <- IO(info("fetched" -> fetched))
-        decoded  <- IO(decode(pubsubMessage.data.getOrElse("")))
+        decoded  <- IO(Base64Decoder.decode(pubsubMessage.data.getOrElse("")))
         notified <- notifier.notify(decoded)
         _        <- IO(promise.success(notified))
       } yield ()
 
       task
         .handleErrorWith { exception =>
-          error(exception)
           promise.failure(exception)
           IO.raiseError(exception)
         }.unsafeRunAsyncAndForget()
