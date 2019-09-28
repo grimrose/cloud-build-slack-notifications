@@ -18,6 +18,8 @@ steps:
       - functions
       - deploy
       - cloudBuildSlackNotifications
+      - --region
+      - asia-northeast1
       - --entry-point
       - entryPoint
       - --trigger-topic
