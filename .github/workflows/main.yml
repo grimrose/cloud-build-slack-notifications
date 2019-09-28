@@ -36,6 +36,6 @@ jobs:
         yarn install
 
     - name: Run test
-      run: sbt clean lint "testOnly * -- -oDF"
       env:
         SBT_OPTS: -Dfile.encoding=UTF8 -Xms4G -Xmx4G -Xss6M -XX:ReservedCodeCacheSize=512M -XX:MaxMetaspaceSize=512M
+      run: sbt clean lint "testOnly * -- -oDF"
