@@ -36,6 +36,4 @@ jobs:
         yarn install
 
     - name: Run test
-      run: |
-        export SBT_OPTS="-Xms4G -Xmx4G -Xss6M -XX:ReservedCodeCacheSize=512M -XX:MaxMetaspaceSize=1024M"
-        sbt clean lint test
+      run: SBT_OPTS="-Xms4G -Xmx4G -Xss6M -XX:ReservedCodeCacheSize=512M -XX:MaxMetaspaceSize=1024M" sbt clean lint test
