@@ -1,7 +1,7 @@
 package ninja.grimrose.sandbox.infra.gcp
 
 import cats.effect.{ContextShift, IO}
-import ninja.grimrose.sandbox.infra.Base64DecodeSupport
+import ninja.grimrose.sandbox.core.Base64Decoder
 import wvlet.log.LogSupport
 
 import scala.concurrent.ExecutionContext
@@ -14,8 +14,7 @@ trait GoogleCloudRCLoadEnvDecoder[F[_]] {
 
 class GoogleCloudRCLoadEnvDecoderIO(executionContext: ExecutionContext)
     extends GoogleCloudRCLoadEnvDecoder[IO]
-    with LogSupport
-    with Base64DecodeSupport {
+    with LogSupport {
 
   def decode(projectId: ProjectId, configName: ConfigName, variableKey: String): IO[String] = {
     findVariable(projectId, configName, variableKey).map(variableToString(_, variableKey))
@@ -40,7 +39,7 @@ class GoogleCloudRCLoadEnvDecoderIO(executionContext: ExecutionContext)
   }
 
   private def variableToString(variable: Variable, variableKey: String): String = {
-    val value = decode(variable.value)
+    val value = Base64Decoder.decode(variable.value)
     debug(s"$variableKey" -> value)
     value
   }
