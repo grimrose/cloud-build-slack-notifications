@@ -21,7 +21,7 @@
     "node": ">=10.15.3 <11.0.0"
   },
   "dependencies": {
-    "@google-cloud/kms": "1.3.2",
+    "@google-cloud/kms": "1.4.0",
     "@google-cloud/rcloadenv": "^1.1.3",
     "http2": "^3.3.7",
     "node-fetch": "^2.6.0",
@@ -34,6 +34,7 @@
     "build-fast": "run-s clean parcel-build-fast",
     "build-opt": "run-s clean parcel-build-opt",
     "webpack-build-fast": "webpack --config webpack/webpack-fastopt.config.js",
+    "webpack-build-opt": "webpack --config webpack/webpack-opt.config.js",
     "stage:mv-index": "cpy ./functions/entry-point/target/scala-2.12/*-opt.js ./target/dist --rename=index.js",
     "stage:cp-src-map": "cpx ./functions/entry-point/target/scala-2.12/*-opt.js.map ./target/dist",
     "stage:cp-pkg": "cpx package.json ./target/dist",

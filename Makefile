@@ -14,8 +14,8 @@ lint:
 compile:
 	sbt compile
 
-test: lint
-	sbt "testOnly * -- -oDF"
+test:
+	sbt lint "testOnly * -- -oDF"
 
 coverage:
 	sbt cov
@@ -26,11 +26,16 @@ fast:
 fullOptJS:
 	sbt fullOptJS
 
-outdated:
+outdated: outdated-scala outdated-sbt-plugins outdated-node
+
+outdated-scala:
 	sbt dependencyUpdates
 
-outdated-plugins:
+outdated-sbt-plugins:
 	sbt ";dependencyUpdates; reload plugins; dependencyUpdates"
+
+outdated-node:
+	yarn outdated
 
 evicted:
 	sbt evicted
@@ -60,6 +65,7 @@ stage: fullOptJS
 
 deploy-gcp:
 	gcloud functions deploy cloudBuildSlackNotifications \
+		--region asia-northeast1 \
 		--entry-point entryPoint \
 		--trigger-topic cloud-builds \
 		--runtime nodejs10 \
