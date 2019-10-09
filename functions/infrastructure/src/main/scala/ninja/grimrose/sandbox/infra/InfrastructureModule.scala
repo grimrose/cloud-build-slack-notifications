@@ -1,6 +1,6 @@
 package ninja.grimrose.sandbox.infra
 
-import cats.effect.IO
+import cats.effect.{ContextShift, IO}
 import hammock.InterpTrans
 import hammock.fetch.Interpreter
 import ninja.grimrose.sandbox.application.SlackNotifier
@@ -25,11 +25,14 @@ object InfrastructureModule {
     newDesign
       .bind[ConfigName].toInstance(ConfigName("rc-cloud-build-slack-notifications"))
       .bind[SlackNotifier[IO]].to[SlackNotifierIO]
-      .bind[InterpTrans[IO]].toInstance(Interpreter.instance[IO])
+      .bind[InterpTrans[IO]].toInstanceProvider[ExecutionContext] { executionContext =>
+        implicit val cs: ContextShift[IO] = IO.contextShift(executionContext)
+        Interpreter.instance[IO]
+      }
       .bind[CloudBuildMessagePublisher[IO]].to[CloudBuildMessagePublisherIO]
-      .bind[GoogleCloudRCLoadEnvDecoder[IO]].toInstanceProvider[ExecutionContext](
-        executionContext => new GoogleCloudRCLoadEnvDecoderIO(executionContext)
-      )
+      .bind[GoogleCloudRCLoadEnvDecoder[IO]].toInstanceProvider[ExecutionContext] { executionContext =>
+        new GoogleCloudRCLoadEnvDecoderIO(executionContext)
+      }
       .bind[GoogleCloudKmsIdClient[IO]].toInstanceProvider[GoogleCloudRCLoadEnvDecoder[IO], ExecutionContext](
         (loadEnvDecoder, executionContext) => new GoogleCloudKmsIdClientIO(loadEnvDecoder, executionContext)
       )
