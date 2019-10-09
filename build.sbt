@@ -7,11 +7,11 @@ ThisBuild / version := "0.1"
 
 ThisBuild / scalafmtOnCompile := true
 
-val scalaJsnodeJsV8Version = "0.8.0"
+val scalaJsNodeJsV10Version = "0.9.0"
 
-val airframeVersion  = "19.9.7"
-val hammockVersion   = "0.9.2"
-val circeVersion     = "0.12.1"
+val airframeVersion  = "19.10.1"
+val hammockVersion   = "0.10.0"
+val circeVersion     = "0.12.2"
 val catsVersion      = "2.0.0"
 val catsRetryVersion = "0.3.0"
 
@@ -74,10 +74,10 @@ lazy val testSettings = Def.settings(
 
 lazy val coreSettings = baseSettings ++ airframeSettings ++ circeSettings ++ testSettings ++ Def.settings(
   scalaJSLinkerConfig ~= {
-    _.withModuleKind(ModuleKind.CommonJSModule)
+    _.withModuleKind(ModuleKind.CommonJSModule) /*.withOptimizer(false)*/
   },
   libraryDependencies ++= (
-    "net.exoego" %%% "scala-js-nodejs-v8" % scalaJsnodeJsV8Version ::
+    "net.exoego" %%% "scala-js-nodejs-v10" % scalaJsNodeJsV10Version ::
       Nil
   )
 )
@@ -123,9 +123,6 @@ lazy val `entry-point` = (project in file("functions/entry-point"))
   .enablePlugins(ScalaJSPlugin)
   .settings(coreSettings)
   .settings(
-    scalaJSLinkerConfig ~= {
-      _.withModuleKind(ModuleKind.CommonJSModule)
-    },
     libraryDependencies ++= (
       ScalablyTyped.E.`express-serve-static-core` ::
         Nil
