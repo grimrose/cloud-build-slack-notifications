@@ -7,7 +7,7 @@ import scala.scalajs.js.annotation.{JSImport, JSName}
 @js.native
 object GoogleCloudRCLoadEnv extends js.Object {
   import typings.googleDashAuthDashLibrary.buildSrcAuthGoogleauthMod.GoogleAuthOptions
-  import typings.node.NodeJSNs.ProcessEnv
+  import typings.node.NodeJS.ProcessEnv
 
   import scala.scalajs.js
   import js._

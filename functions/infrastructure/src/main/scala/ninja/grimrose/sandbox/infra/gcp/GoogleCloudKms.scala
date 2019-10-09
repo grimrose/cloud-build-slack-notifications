@@ -14,10 +14,9 @@ class GoogleCloudKmsIO(configName: ConfigName, kmsIdClient: GoogleCloudKmsIdClie
     implicit val ec: ExecutionContext
 ) extends GoogleCloudKms[IO] {
 
-  import typings.atGoogleDashCloudKms.atGoogleDashCloudKmsMod.v1Ns.{
-    KeyManagementServiceClient,
-    KeyManagementServiceClientNs
-  }
+  import typings.node.Buffer
+  import typings.atGoogleDashCloudKms.atGoogleDashCloudKmsMod.KeyManagementServiceClient
+  import typings.atGoogleDashCloudKms.atGoogleDashCloudKmsMod.v1.KeyManagementServiceClient.DecryptRequest
 
   def decrypt(cipherText: CipherText): IO[String] = {
     for {
@@ -44,10 +43,10 @@ class GoogleCloudKmsIO(configName: ConfigName, kmsIdClient: GoogleCloudKmsIdClie
 
         val keyPath = client.cryptoKeyPath(projectId.value, locationId.value, keyRingId.value, cryptoKeyId.value)
 
-        val request = new KeyManagementServiceClientNs.DecryptRequest() {
-          override var ciphertext: String = cipherText.value
-          override var name: String       = keyPath
-        }
+        val request = DecryptRequest(
+          ciphertext = Buffer.from(cipherText.value),
+          name = keyPath
+        )
 
         client.decrypt(request).toFuture.map(_._1.plaintext.toString("utf-8"))
       }
