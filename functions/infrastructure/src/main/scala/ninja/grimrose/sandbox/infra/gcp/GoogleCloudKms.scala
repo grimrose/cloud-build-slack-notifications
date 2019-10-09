@@ -15,6 +15,7 @@ class GoogleCloudKmsIO(configName: ConfigName, kmsIdClient: GoogleCloudKmsIdClie
 ) extends GoogleCloudKms[IO] {
 
   import typings.node.Buffer
+  import typings.node.nodeStrings.base64
   import typings.atGoogleDashCloudKms.atGoogleDashCloudKmsMod.KeyManagementServiceClient
   import typings.atGoogleDashCloudKms.atGoogleDashCloudKmsMod.v1.KeyManagementServiceClient.DecryptRequest
 
@@ -44,7 +45,7 @@ class GoogleCloudKmsIO(configName: ConfigName, kmsIdClient: GoogleCloudKmsIdClie
         val keyPath = client.cryptoKeyPath(projectId.value, locationId.value, keyRingId.value, cryptoKeyId.value)
 
         val request = DecryptRequest(
-          ciphertext = Buffer.from(cipherText.value),
+          ciphertext = Buffer.from(cipherText.value, base64),
           name = keyPath
         )
 
