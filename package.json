@@ -10,12 +10,7 @@
     "cpy-cli": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "parcel-bundler": "^1.12.3",
-    "parcel-plugin-pbf": "^1.0.1",
-    "pbf-loader": "^1.1.0",
-    "webpack": "^4.40.2",
-    "webpack-cli": "^3.3.9",
-    "webpack-merge": "^4.2.2",
-    "webpack-node-externals": "^1.7.2"
+    "parcel-plugin-pbf": "^1.0.1"
   },
   "engines": {
     "node": ">=10.15.3 <11.0.0"
@@ -31,10 +26,8 @@
     "clean": "rimraf ./target/dist",
     "parcel-build-fast": "parcel build ./functions/entry-point/target/scala-2.12/entry-point-fastopt.js --target node -d ./target/dist --out-file index.js --bundle-node-modules",
     "parcel-build-opt": "parcel build ./functions/entry-point/target/scala-2.12/entry-point-opt.js --target node -d ./target/dist --out-file index.js --bundle-node-modules",
-    "build-fast": "run-s clean parcel-build-fast",
-    "build-opt": "run-s clean parcel-build-opt",
-    "webpack-build-fast": "webpack --config webpack/webpack-fastopt.config.js",
-    "webpack-build-opt": "webpack --config webpack/webpack-opt.config.js",
+    "stage-parcel-fast": "run-s clean parcel-build-fast",
+    "stage-parcel-opt": "run-s clean parcel-build-opt",
     "stage:mv-index": "cpy ./functions/entry-point/target/scala-2.12/*-opt.js ./target/dist --rename=index.js",
     "stage:cp-src-map": "cpx ./functions/entry-point/target/scala-2.12/*-opt.js.map ./target/dist",
     "stage:cp-pkg": "cpx package.json ./target/dist",
