@@ -65,7 +65,7 @@ class CloudBuildMessagePublisherIOSpec extends AsyncFunSpec with BaseSpecSupport
 
     val message = CloudBuildMessage.build(
       buildId = "test",
-      logUrl = "https://console.cloud.google.com",
+      logUrl = "https://example.com",
       status = "SUCCESS",
       badStatus = false,
       startTime = Some("2014-10-02T15:01:23.045123456Z"),

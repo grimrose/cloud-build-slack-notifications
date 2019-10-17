@@ -35,7 +35,7 @@ class SlackNotifierIOSpec extends AsyncFunSpec with BaseSpecSupport {
         """|{
            |  "status": "FAILURE",
            |  "id": "test",
-           |  "logUrl": "https://console.cloud.google.com",
+           |  "logUrl": "https://example.com",
            |  "startTime": "2014-10-02T15:01:23.045123456Z",
            |  "finishTime": "2014-10-02T15:01:23.045123456Z",
            |  "timeout": "3.5s"

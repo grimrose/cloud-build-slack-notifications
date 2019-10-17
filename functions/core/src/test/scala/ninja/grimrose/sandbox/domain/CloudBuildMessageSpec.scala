@@ -11,7 +11,7 @@ class CloudBuildMessageSpec extends FunSpec with TableDrivenPropertyChecks with 
   it("asJson") {
     val message = CloudBuildMessage.build(
       buildId = "test",
-      logUrl = "https://console.cloud.google.com",
+      logUrl = "https://example.com",
       status = "SUCCESS",
       badStatus = false,
       startTime = Some("2014-10-02T15:01:23.045123456Z"),
@@ -25,7 +25,7 @@ class CloudBuildMessageSpec extends FunSpec with TableDrivenPropertyChecks with 
          |  "attachments" : [
          |    {
          |      "title" : "Build logs",
-         |      "title_link" : "https://console.cloud.google.com",
+         |      "title_link" : "https://example.com",
          |      "color" : "good",
          |      "fields" : [
          |        {
@@ -64,7 +64,7 @@ class CloudBuildMessageSpec extends FunSpec with TableDrivenPropertyChecks with 
            |  "projectId" : "example",
            |  "status" : "QUEUED",
            |  "timeout" : "1200s",
-           |  "logUrl" : "https://console.cloud.google.com/"
+           |  "logUrl" : "https://example.com"
            |}""".stripMargin,
         true
       ),
@@ -76,7 +76,7 @@ class CloudBuildMessageSpec extends FunSpec with TableDrivenPropertyChecks with 
            |  "startTime" : "2019-09-25T16:34:24.958573388Z",
            |  "finishTime" : "2019-09-25T16:36:02.353865Z",
            |  "timeout" : "1200s",
-           |  "logUrl" : "https://console.cloud.google.com/"
+           |  "logUrl" : "https://example.com"
            |}""".stripMargin,
         false
       )

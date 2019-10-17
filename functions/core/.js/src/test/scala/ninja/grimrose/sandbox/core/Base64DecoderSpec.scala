@@ -6,7 +6,7 @@ import org.scalatest.FlatSpec
 
 class Base64DecoderSpec extends FlatSpec with BaseSpecSupport {
 
-  it should "be parsed" in {
+  it should "be decoded" in {
     val source = "{\"abcde\":123450}"
 
     val input = Buffer.from(source, "utf-8").toString("base64")
