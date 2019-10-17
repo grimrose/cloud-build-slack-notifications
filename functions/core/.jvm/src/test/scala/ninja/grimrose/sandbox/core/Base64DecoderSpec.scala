@@ -8,7 +8,7 @@ import org.scalatest.FlatSpec
 
 class Base64DecoderSpec extends FlatSpec with BaseSpecSupport {
 
-  it should "be parsed" in {
+  it should "be decoded" in {
     val source = "{\"xyz\":890}"
 
     val input = new String(Base64.getEncoder.encode(source.getBytes(StandardCharsets.UTF_8)))
