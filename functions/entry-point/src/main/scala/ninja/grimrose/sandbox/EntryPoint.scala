@@ -1,5 +1,6 @@
 package ninja.grimrose.sandbox
 
+import buildinfo.BuildInfo
 import cats.effect.IO
 import ninja.grimrose.sandbox.application.SlackNotifier
 import ninja.grimrose.sandbox.core.Base64Decoder
@@ -18,6 +19,8 @@ object EntryPoint extends LogSupport {
 
   Logger.setDefaultLogLevel(LogLevel.INFO)
   Logger.setDefaultFormatter(LogFormatter.PlainSourceCodeLogFormatter)
+
+  info(BuildInfo.toJson)
 
   private val design = InfrastructureModule.design.bind[ExecutionContext].toInstance(queue)
 
