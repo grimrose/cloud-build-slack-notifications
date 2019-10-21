@@ -147,6 +147,8 @@ yarn stage-parcel-opt
 
 ## stage
 
+> Stage files for deployment
+
 ~~~sh
 mask full
 yarn stage
@@ -154,7 +156,7 @@ yarn stage
 
 ## gcloud 
 
-> gcloud sdk version
+> Show gcloud sdk version
 
 ~~~sh
 gcloud version
@@ -192,11 +194,11 @@ gcloud functions logs read cloudBuildSlackNotifications
 
 ~~~sh
 gcloud functions deploy cloudBuildSlackNotifications \
-        --region asia-northeast1 \
-		--entry-point entryPoint \
-		--trigger-topic cloud-builds \
-		--runtime nodejs10 \
-		--source ./target/dist
+    --region asia-northeast1 \
+    --entry-point entryPoint \
+    --trigger-topic cloud-builds \
+    --runtime nodejs10 \
+    --source ./target/dist
 ~~~
 
 ## deploy
