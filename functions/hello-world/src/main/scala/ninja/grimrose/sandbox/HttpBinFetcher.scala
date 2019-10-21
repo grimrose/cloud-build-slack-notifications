@@ -1,11 +1,10 @@
-package ninja.grimrose.sandbox.infra
+package ninja.grimrose.sandbox
 
 import cats.effect.{ContextShift, IO}
-import ninja.grimrose.sandbox.domain.HttpBinResponse
 
 import scala.concurrent.ExecutionContext
 
-trait HammockFetcher {
+trait HttpBinFetcher {
   import hammock._
   import hammock.circe.implicits._
   import hammock.fetch.Interpreter._
