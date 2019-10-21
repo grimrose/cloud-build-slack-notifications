@@ -122,13 +122,19 @@ lazy val infrastructure = (project in file("functions/infrastructure"))
 lazy val `entry-point` = (project in file("functions/entry-point"))
   .enablePlugins(ScalaJSPlugin)
   .settings(coreSettings)
+  .dependsOn(infrastructure % "test->test;compile->compile")
+
+lazy val `hello-world` = (project in file("functions/hello-world"))
+  .enablePlugins(ScalaJSPlugin)
+  .settings(coreSettings)
+  .settings(httpClientSettings)
   .settings(
     libraryDependencies ++= (
       ScalablyTyped.E.`express-serve-static-core` ::
         Nil
     )
   )
-  .dependsOn(infrastructure % "test->test;compile->compile")
+  .dependsOn(coreJs)
 
 lazy val root = (project in file("."))
   .settings(baseSettings)
@@ -136,7 +142,7 @@ lazy val root = (project in file("."))
     name := "cloud-build-slack-notifications",
     noPublish
   )
-  .aggregate(coreJs, coreJvm, application, infrastructure, `entry-point`)
+  .aggregate(coreJs, coreJvm, application, infrastructure, `entry-point`, `hello-world`)
 
 addCommandAlias("fmt", "scalafmtAll;scalafmtSbt")
 addCommandAlias("lint", "scalafmtCheckAll;scalafmtSbtCheck")
