@@ -1,3 +1,3 @@
-package ninja.grimrose.sandbox.domain
+package ninja.grimrose.sandbox
 
 case class HttpBinResponse(origin: String)

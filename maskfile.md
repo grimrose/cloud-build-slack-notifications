@@ -207,3 +207,42 @@ gcloud functions deploy cloudBuildSlackNotifications \
 mask stage
 mask gcloud functions-deploy
 ~~~
+
+## hello-world
+
+~~~sh
+mask hello-world help
+~~~
+
+### hello-world start
+
+~~~sh
+mask fast && \
+yarn start-hello-world
+~~~
+
+### hello-world stage
+
+~~~sh
+mask full && \
+yarn stage-hello-world
+~~~
+
+### hello-world deploy
+
+~~~sh
+mask hello-world stage && \
+gcloud functions deploy helloWorld \
+    --region asia-northeast1 \
+    --entry-point helloWorld \
+    --trigger-http \
+    --set-env-vars NODE_ENV=production \
+    --runtime nodejs10 \
+    --source ./target/dist
+~~~
+
+### hello-world logs
+
+~~~sh
+gcloud functions logs read helloWorld
+~~~

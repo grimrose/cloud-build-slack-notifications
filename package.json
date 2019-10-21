@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
+    "@google-cloud/functions-framework": "^1.3.2",
     "cpx": "^1.5.0",
     "cpy-cli": "^2.0.0",
     "npm-run-all": "^4.1.5",
@@ -24,6 +25,9 @@
   },
   "scripts": {
     "clean": "rimraf ./target/dist",
+    "start-hello-world": "functions-framework --target helloWorld --source ./functions/hello-world/target/scala-2.12/hello-world-fastopt.js",
+    "parcel-hello-world": "parcel build ./functions/hello-world/target/scala-2.12/hello-world-opt.js --target node -d ./target/dist --out-file index.js --bundle-node-modules",
+    "stage-hello-world": "run-s clean parcel-hello-world",
     "parcel-build-fast": "parcel build ./functions/entry-point/target/scala-2.12/entry-point-fastopt.js --target node -d ./target/dist --out-file index.js --bundle-node-modules",
     "parcel-build-opt": "parcel build ./functions/entry-point/target/scala-2.12/entry-point-opt.js --target node -d ./target/dist --out-file index.js --bundle-node-modules",
     "stage-parcel-fast": "run-s clean parcel-build-fast",
