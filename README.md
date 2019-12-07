@@ -38,3 +38,11 @@ mask test
 ```shell script
 mask full
 ```
+
+## for update
+
+```shell script
+mask outdated
+```
+
+check [oyvindberg/ScalablyTyped](https://github.com/oyvindberg/ScalablyTyped) release version
