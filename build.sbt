@@ -9,7 +9,7 @@ ThisBuild / scalafmtOnCompile := true
 
 val scalaJsNodeJsV10Version = "0.9.0"
 
-val airframeVersion  = "19.10.1"
+val airframeVersion  = "19.11.2"
 val hammockVersion   = "0.10.0"
 val circeVersion     = "0.12.2"
 val catsVersion      = "2.0.0"
