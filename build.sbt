@@ -13,7 +13,7 @@ val airframeVersion  = "19.11.2"
 val hammockVersion   = "0.10.0"
 val circeVersion     = "0.12.2"
 val catsVersion      = "2.0.0"
-val catsRetryVersion = "0.3.0"
+val catsRetryVersion = "0.3.2"
 
 lazy val baseSettings = Def.settings(
   scalacOptions ~= filterConsoleScalacOptions,
