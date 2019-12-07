@@ -1,9 +1,9 @@
 // for scala.js
 addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "0.6.1")
-addSbtPlugin("org.scala-js"       % "sbt-scalajs"              % "0.6.29")
+addSbtPlugin("org.scala-js"       % "sbt-scalajs"              % "0.6.31")
 
 resolvers += Resolver.bintrayRepo("oyvindberg", "ScalablyTyped")
-addSbtPlugin("org.scalablytyped" % "sbt-scalablytyped" % "201910080530")
+addSbtPlugin("org.scalablytyped" % "sbt-scalablytyped" % "201912051010")
 
 // for build info
 addSbtPlugin("com.typesafe.sbt" % "sbt-git"       % "1.0.0")
