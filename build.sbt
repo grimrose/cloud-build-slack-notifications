@@ -9,11 +9,11 @@ ThisBuild / scalafmtOnCompile := true
 
 val scalaJsNodeJsV10Version = "0.9.0"
 
-val airframeVersion  = "19.10.1"
+val airframeVersion  = "19.11.2"
 val hammockVersion   = "0.10.0"
 val circeVersion     = "0.12.2"
 val catsVersion      = "2.0.0"
-val catsRetryVersion = "0.3.0"
+val catsRetryVersion = "0.3.2"
 
 lazy val baseSettings = Def.settings(
   scalacOptions ~= filterConsoleScalacOptions,
@@ -67,7 +67,7 @@ lazy val gcpSettings = Def.settings(
 
 lazy val testSettings = Def.settings(
   libraryDependencies ++= (
-    "org.scalatest" %%% "scalatest" % "3.0.8" % Test ::
+    "org.scalatest" %%% "scalatest" % "3.1.0" % Test ::
       Nil
   )
 )

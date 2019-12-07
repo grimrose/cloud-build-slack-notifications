@@ -1,7 +1,8 @@
 package ninja.grimrose.sandbox
 
-import org.scalatest.{DiagrammedAssertions, OptionValues, Suite}
+import org.scalatest.{OptionValues, Suite}
+import org.scalatest.diagrams.Diagrams
 
-trait BaseSpecSupport extends DiagrammedAssertions with OptionValues with SpecLogSupport with AirframeSpecSupport {
+trait BaseSpecSupport extends Diagrams with OptionValues with SpecLogSupport with AirframeSpecSupport {
   this: Suite =>
 }

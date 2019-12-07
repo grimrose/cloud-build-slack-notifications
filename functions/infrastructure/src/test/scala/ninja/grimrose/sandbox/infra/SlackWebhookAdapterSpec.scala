@@ -4,9 +4,10 @@ import cats.effect.IO
 import ninja.grimrose.sandbox.BaseSpecSupport
 import ninja.grimrose.sandbox.domain.SlackWebhook
 import ninja.grimrose.sandbox.infra.gcp._
-import org.scalatest.{AsyncFunSpec, EitherValues}
+import org.scalatest.EitherValues
 
 import scala.concurrent.ExecutionContext
+import org.scalatest.funspec.AsyncFunSpec
 
 class SlackWebhookAdapterSpec extends AsyncFunSpec with BaseSpecSupport with EitherValues {
 

@@ -1,10 +1,10 @@
 package ninja.grimrose.sandbox.domain
 
 import ninja.grimrose.sandbox.BaseSpecSupport
-import org.scalatest.FunSpec
 import org.scalatest.prop.TableDrivenPropertyChecks
+import org.scalatest.funspec.AnyFunSpec
 
-class CloudBuildMessageSpec extends FunSpec with TableDrivenPropertyChecks with BaseSpecSupport {
+class CloudBuildMessageSpec extends AnyFunSpec with TableDrivenPropertyChecks with BaseSpecSupport {
 
   import io.circe.syntax._
 
