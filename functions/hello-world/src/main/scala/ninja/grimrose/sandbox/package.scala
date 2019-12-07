@@ -5,5 +5,5 @@ import typings.expressDashServeDashStaticDashCore.expressDashServeDashStaticDash
 import scala.scalajs.js
 
 package object sandbox {
-  type HttpFunction = js.Function2[Request[_], Response, js.Any]
+  type HttpFunction = js.Function2[Request[_, js.Any, js.Any], Response[js.Any], js.Any]
 }
