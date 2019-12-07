@@ -2,9 +2,9 @@ package ninja.grimrose.sandbox.core
 
 import io.scalajs.nodejs.buffer.Buffer
 import ninja.grimrose.sandbox.BaseSpecSupport
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class Base64DecoderSpec extends FlatSpec with BaseSpecSupport {
+class Base64DecoderSpec extends AnyFlatSpec with BaseSpecSupport {
 
   it should "be decoded" in {
     val source = "{\"abcde\":123450}"

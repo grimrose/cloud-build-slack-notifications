@@ -16,10 +16,11 @@ import ninja.grimrose.sandbox.infra.gcp.{
   LocationId,
   ProjectId
 }
-import org.scalatest.{AsyncFunSpec, EitherValues}
+import org.scalatest.EitherValues
 import wvlet.airframe.Design
 
 import scala.concurrent.ExecutionContext
+import org.scalatest.funspec.AsyncFunSpec
 
 class CloudBuildMessagePublisherIOSpec extends AsyncFunSpec with BaseSpecSupport with EitherValues {
 

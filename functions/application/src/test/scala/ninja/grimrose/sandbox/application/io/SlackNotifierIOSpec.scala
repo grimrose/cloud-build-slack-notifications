@@ -4,10 +4,10 @@ import cats.effect.IO
 import ninja.grimrose.sandbox.BaseSpecSupport
 import ninja.grimrose.sandbox.application.SlackNotifier
 import ninja.grimrose.sandbox.domain.{CloudBuildMessage, CloudBuildMessagePublisher}
-import org.scalatest.AsyncFunSpec
 import wvlet.airframe.Design
 
 import scala.concurrent.ExecutionContext
+import org.scalatest.funspec.AsyncFunSpec
 
 class SlackNotifierIOSpec extends AsyncFunSpec with BaseSpecSupport {
 

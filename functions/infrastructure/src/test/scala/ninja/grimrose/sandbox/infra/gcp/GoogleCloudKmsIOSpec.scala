@@ -1,11 +1,11 @@
 package ninja.grimrose.sandbox.infra.gcp
 
 import ninja.grimrose.sandbox.BaseSpecSupport
-import org.scalatest.FlatSpec
 import typings.node.Buffer
 import typings.node.nodeStrings.base64
+import org.scalatest.flatspec.AnyFlatSpec
 
-class GoogleCloudKmsIOSpec extends FlatSpec with BaseSpecSupport {
+class GoogleCloudKmsIOSpec extends AnyFlatSpec with BaseSpecSupport {
 
   it should "be converted" in {
     val source = "abcde12345"
