@@ -7,13 +7,15 @@ ThisBuild / version := "0.1"
 
 ThisBuild / scalafmtOnCompile := true
 
-val scalaJsNodeJsV10Version = "0.9.0"
+val scalaJsNodeJsV10Version = "0.9.1"
 
-val airframeVersion  = "19.11.2"
+val airframeVersion  = "19.12.4"
 val hammockVersion   = "0.10.0"
-val circeVersion     = "0.12.2"
+val circeVersion     = "0.12.3"
 val catsVersion      = "2.0.0"
 val catsRetryVersion = "0.3.2"
+
+val circeGenericExtrasVersion = "0.12.2"
 
 lazy val baseSettings = Def.settings(
   scalacOptions ~= filterConsoleScalacOptions,
@@ -23,7 +25,7 @@ lazy val baseSettings = Def.settings(
 
 lazy val airframeSettings = Def.settings(
   libraryDependencies ++= (
-    "org.scala-lang.modules" %%% "scala-collection-compat" % "2.1.2" ::
+    "org.scala-lang.modules" %%% "scala-collection-compat" % "2.1.3" ::
       "org.wvlet.airframe"   %%% "airframe"                % airframeVersion ::
       "org.wvlet.airframe"   %%% "airframe-log"            % airframeVersion ::
       Nil
@@ -34,7 +36,7 @@ lazy val circeSettings = Def.settings(
   libraryDependencies ++= (
     "io.circe"   %%% "circe-core"           % circeVersion ::
       "io.circe" %%% "circe-generic"        % circeVersion ::
-      "io.circe" %%% "circe-generic-extras" % circeVersion ::
+      "io.circe" %%% "circe-generic-extras" % circeGenericExtrasVersion ::
       "io.circe" %%% "circe-parser"         % circeVersion ::
       "io.circe" %%% "circe-scalajs"        % circeVersion ::
       Nil
